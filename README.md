@@ -4,9 +4,7 @@ CSC 8370 - Data Security
 
 ## Goal
 Creating a system to protect users from Backdoor Trojan Attacks
-
-
-
+---
 Replicated a Backdoor Trojan Attack.
 
 Using a SQLite local database for each user 
