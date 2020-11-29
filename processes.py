@@ -1,9 +1,7 @@
 import os
 import psutil
-import sqlite.py
+import database
 
-safeList = []
-unsafeList = []
 currentProcessesName = []
 currentPID = []
 
@@ -31,19 +29,19 @@ def processesRunning():
 processesRunning()
 
 
-def safe(processList):
-    for x in processList:
-        userInput = input("Is {} safe? (Y/N): ".format(x))
+def safe(processNameList, processPIDList):
+    for name, pid in zip(processNameList, processPIDList):
+        userInput = input("Is {} safe? (Y/N): ".format(name))
         if userInput == "Y" or userInput == "y":
-            safeList.append(x)
+            database.addProcess(pid, name, 1)
         else:
             if userInput == "N" or userInput == "n":
-                unsafeList.append(x)
-                print("WARNING! ", x, " IS NOT SAFE!")
+                database.addProcess(pid, name, 0)
+                print("WARNING! ", name, " IS NOT SAFE!")
             else:
                 print("INVALID INPUT. TRY AGAIN")
-                x = x-1
 
 
 
-safe(currentProcessesName)
+safe(currentProcessesName, currentPID)
+
