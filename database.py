@@ -23,3 +23,13 @@ def addProcess(safeProcessID, safeProcessName, safeProcessBool):
                     (?, ?, ?)""", (safeProcessID, safeProcessName, safeProcessBool))
     conn.commit()
 
+# METHOD TO SEE IF THE PROCESS IS ALREADY IN THE DATABASE : TRUE = EXISTS, FALSE = DOES NOT EXIST
+def alreadyExists(processName): 
+    c.execute("""SELECT name
+                FROM processes
+                WHERE name=?""", (processName,))
+    result = c.fetchone()
+    if result:
+        return True
+    else:
+        return False

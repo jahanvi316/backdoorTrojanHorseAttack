@@ -1,6 +1,7 @@
 import os
 import psutil
 import database
+from subprocess import Popen
 
 currentProcessesName = []
 currentPID = []
@@ -30,18 +31,22 @@ processesRunning()
 
 
 def safe(processNameList, processPIDList):
+
     for name, pid in zip(processNameList, processPIDList):
-        userInput = input("Is {} safe? (Y/N): ".format(name))
-        if userInput == "Y" or userInput == "y":
-            database.addProcess(pid, name, 1)
-        else:
-            if userInput == "N" or userInput == "n":
-                database.addProcess(pid, name, 0)
-                print("WARNING! ", name, " IS NOT SAFE!")
+        exists = database.alreadyExists(name)
+        if (exists == False):
+            userInput = input("Is {} safe? (Y/N): ".format(name))
+            if userInput == "Y" or userInput == "y": 
+                database.addProcess(pid, name, 1)
             else:
-                print("INVALID INPUT. TRY AGAIN")
+                if userInput == "N" or userInput == "n":
+                    database.addProcess(pid, name, 0)
+                    print("WARNING! ", name, " IS NOT SAFE!")
+                else:
+                    print("INVALID INPUT. TRY AGAIN")
 
 
 
 safe(currentProcessesName, currentPID)
+
 
